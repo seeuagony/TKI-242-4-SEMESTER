@@ -2,6 +2,9 @@
 #include <vector>
 #include <iterator>
 #include <algorithm>
+#include <vector>
+
+double nextElement(std::vector<double>& state, double d);
 
 /**
  * @brief функция для ввода вещественного числа пользователем
@@ -45,39 +48,4 @@ int main(void) {
     print_result(result);
 
     return 0;
-}
-
-double input_double(const std::string& message) {
-    std::cout << message;
-    double value = 0.0;
-    std::cin >> value;
-    return value;
-}
-
-int input_int(const std::string& message) {
-    std::cout << message;
-    int value = 0;
-    std::cin >> value;
-    return value;
-}
-
-std::vector<double> generate_progression(double a, double d, int n) {
-    std::vector<double> result(n);
-    std::generate_n(
-        result.begin(),
-        n,
-        [a, d, i = 0]() mutable {
-            return a + d * i++;
-        }
-    );
-    return result;
-}
-
-void print_result(const std::vector<double>& result) {
-    std::copy(
-        result.begin(),
-        result.end(),
-        std::ostream_iterator<double>(std::cout, " ")
-    );
-    std::cout << std::endl;
 }
