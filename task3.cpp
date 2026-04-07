@@ -3,6 +3,7 @@
 #include <set>
 #include <algorithm>
 #include <iterator>
+#include <sstream>
 
 /**
  * @brief функциональный объект для вывода элемента с количеством повторений
@@ -14,31 +15,31 @@ struct PrintWithCount {
 };
 
 /**
- * @brief считывает вектор из потока ввода
+ * @brief считывает вектор из одной строки
  * @return введённый вектор
  */
-std::vector<int> input_vector();
+std::vector<int> inputVector();
 
 /**
  * @brief точка входа в программу
  * @return 0 при успешном завершении
  */
 int main(void) {
-    const std::vector<int> v = input_vector();
-
+    const std::vector<int> v = inputVector();
     const std::multiset<int> m(v.begin(), v.end());
     const std::set<int> s(v.begin(), v.end());
-
     std::for_each(s.begin(), s.end(), PrintWithCount(m));
     std::cout << '\n';
-
     return 0;
 }
 
-std::vector<int> input_vector() {
-    std::cout << "Введите элементы вектора: ";
+std::vector<int> inputVector() {
+    std::cout << "Введите элементы вектора (в одну строку): ";
+    std::string line = "";
+    std::getline(std::cin, line);
+    std::istringstream ss(line);
     return std::vector<int>(
-        std::istream_iterator<int>(std::cin),
+        std::istream_iterator<int>(ss),
         std::istream_iterator<int>()
     );
 }
