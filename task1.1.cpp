@@ -2,20 +2,15 @@
 #include <vector>
 #include <iterator>
 #include <algorithm>
+#include <sstream>
 
 /**
- * @brief функция для ввода вещественного числа пользователем
- * @param message сообщение перед вводом
- * @return введённое значение
+ * @brief считывает a, d, n из одной строки
+ * @param a первый элемент прогрессии
+ * @param d разность прогрессии
+ * @param n количество элементов
  */
-double input_double(const std::string& message);
-
-/**
- * @brief функция для ввода целого числа пользователем
- * @param message сообщение перед вводом
- * @return введённое значение
- */
-int input_int(const std::string& message);
+void input_params(double& a, double& d, int& n);
 
 /**
  * @brief генерирует вектор с членами арифметической прогрессии
@@ -37,9 +32,9 @@ void print_result(const std::vector<double>& result);
  * @return 0 при успешном завершении
  */
 int main(void) {
-    const double a = input_double("Введите a: ");
-    const double d = input_double("Введите d: ");
-    const int n = input_int("Введите n: ");
+    double a = 0.0, d = 0.0;
+    int n = 0;
+    input_params(a, d, n);
 
     const std::vector<double> result = generate_progression(a, d, n);
     print_result(result);
@@ -47,18 +42,12 @@ int main(void) {
     return 0;
 }
 
-double input_double(const std::string& message) {
-    std::cout << message;
-    double value = 0.0;
-    std::cin >> value;
-    return value;
-}
-
-int input_int(const std::string& message) {
-    std::cout << message;
-    int value = 0;
-    std::cin >> value;
-    return value;
+void input_params(double& a, double& d, int& n) {
+    std::cout << "Введите a, d, n: ";
+    std::string line = "";
+    std::getline(std::cin, line);
+    std::istringstream ss(line);
+    ss >> a >> d >> n;
 }
 
 std::vector<double> generate_progression(double a, double d, int n) {
