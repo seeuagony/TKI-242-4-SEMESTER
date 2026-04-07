@@ -2,9 +2,10 @@
 #include <vector>
 #include <algorithm>
 #include <iterator>
+#include <sstream>
 
 /**
- * @brief вводит вектор с клавиатуры
+ * @brief считывает вектор из одной строки
  * @param message сообщение перед вводом
  * @return введённый вектор
  */
@@ -28,7 +29,7 @@ void printVector(const std::vector<int>& v);
  * @return 0 при успешном завершении
  */
 int main(void) {
-    const std::vector<int> v = inputVector("Введите элементы вектора (0 для завершения): ");
+    const std::vector<int> v = inputVector("Введите элементы вектора (в одну строку): ");
     std::cout << "До преобразований: ";
     printVector(v);
 
@@ -41,12 +42,13 @@ int main(void) {
 
 std::vector<int> inputVector(const std::string& message) {
     std::cout << message;
-    std::vector<int> v;
-    int value = 0;
-    while (std::cin >> value && value != 0) {
-        v.push_back(value);
-    }
-    return v;
+    std::string line = "";
+    std::getline(std::cin, line);
+    std::istringstream ss(line);
+    return std::vector<int>(
+        std::istream_iterator<int>(ss),
+        std::istream_iterator<int>()
+    );
 }
 
 std::vector<int> insertMinusOne(std::vector<int> v) {
