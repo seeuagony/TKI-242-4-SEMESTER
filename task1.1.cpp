@@ -5,12 +5,18 @@
 #include <sstream>
 
 /**
- * @brief считывает a, d, n из одной строки
- * @param a первый элемент прогрессии
- * @param d разность прогрессии
- * @param n количество элементов
+ * @brief считывает одно вещественное число
+ * @param message сообщение перед вводом
+ * @return введённое число
  */
-void input_params(double& a, double& d, int& n);
+double input_double(const std::string& message);
+
+/**
+ * @brief считывает одно целое число
+ * @param message сообщение перед вводом
+ * @return введённое число
+ */
+int input_int(const std::string& message);
 
 /**
  * @brief генерирует вектор с членами арифметической прогрессии
@@ -23,31 +29,41 @@ std::vector<double> generate_progression(double a, double d, int n);
 
 /**
  * @brief выводит элементы вектора через пробел
- * @param result вектор для вывода
+ * @param v вектор для вывода
  */
-void print_result(const std::vector<double>& result);
+void print_vector(const std::vector<double>& v);
 
 /**
  * @brief точка входа в программу
  * @return 0 при успешном завершении
  */
 int main(void) {
-    double a = 0.0, d = 0.0;
-    int n = 0;
-    input_params(a, d, n);
-
+    const double a = input_double("Введите первый элемент прогрессии a: ");
+    const double d = input_double("Введите разность прогрессии d: ");
+    const int n = input_int("Введите количество элементов n: ");
     const std::vector<double> result = generate_progression(a, d, n);
-    print_result(result);
-
+    print_vector(result);
     return 0;
 }
 
-void input_params(double& a, double& d, int& n) {
-    std::cout << "Введите a, d, n: ";
+double input_double(const std::string& message) {
+    std::cout << message;
     std::string line = "";
     std::getline(std::cin, line);
     std::istringstream ss(line);
-    ss >> a >> d >> n;
+    double value = 0.0;
+    ss >> value;
+    return value;
+}
+
+int input_int(const std::string& message) {
+    std::cout << message;
+    std::string line = "";
+    std::getline(std::cin, line);
+    std::istringstream ss(line);
+    int value = 0;
+    ss >> value;
+    return value;
 }
 
 std::vector<double> generate_progression(double a, double d, int n) {
@@ -62,11 +78,8 @@ std::vector<double> generate_progression(double a, double d, int n) {
     return result;
 }
 
-void print_result(const std::vector<double>& result) {
-    std::copy(
-        result.begin(),
-        result.end(),
-        std::ostream_iterator<double>(std::cout, " ")
-    );
-    std::cout << std::endl;
+void print_vector(const std::vector<double>& v) {
+    std::copy(v.begin(), v.end(),
+              std::ostream_iterator<double>(std::cout, " "));
+    std::cout << '\n';
 }
