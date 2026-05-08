@@ -25,7 +25,7 @@ int input_int(const std::string& message);
  * @param n количество элементов
  * @return вектор с n членами прогрессии
  */
-std::vector<double> generate_progression(double a, double d, int n);
+std::vector<double> generate_progression(const double a, const double d, const int n);
 
 /**
  * @brief выводит элементы вектора через пробел
@@ -50,6 +50,7 @@ double input_double(const std::string& message) {
     std::cout << message;
     std::string line = "";
     std::getline(std::cin, line);
+    if (line.empty()) return 0.0;
     std::istringstream ss(line);
     double value = 0.0;
     ss >> value;
@@ -60,13 +61,14 @@ int input_int(const std::string& message) {
     std::cout << message;
     std::string line = "";
     std::getline(std::cin, line);
+    if (line.empty()) return 0;
     std::istringstream ss(line);
     int value = 0;
     ss >> value;
     return value;
 }
 
-std::vector<double> generate_progression(double a, double d, int n) {
+std::vector<double> generate_progression(const double a, const double d, const int n) {
     std::vector<double> result(n);
     std::generate_n(
         result.begin(),
